@@ -7,8 +7,8 @@ module.exports = async function connect(message) {
         const amqpServer = "amqp://localhost:5672"
         const connection = await amqp.connect(amqpServer)
         const channel = await connection.createChannel();
-        await channel.assertQueue("channel1");
-        await channel.sendToQueue("channel1", Buffer.from(JSON.stringify(message)))
+        await channel.assertQueue("url-channel3");
+        await channel.sendToQueue("url-channel3", Buffer.from(JSON.stringify(message)))
         console.log(`Sent succesfuly ${message}`);
         await channel.close();
         await connection.close();
