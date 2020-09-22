@@ -1,7 +1,6 @@
 const connection = require('../connection/connection')
 const sql = require('../queries/sql')
 const producer = require('../producer');
-const { select } = require('../queries/sql');
 
 class Queries{
 
@@ -9,12 +8,12 @@ class Queries{
         var res;
         const db= await connection.createConn();
         db.query(sql.select,[id],(err,result) => {
-            if (err) throw err;
+            if (err) console.log("Error "+err);
             res = result[0];
         })
         db.query(sql.delete,id,(err,result) => {
 
-            if (err) throw err;
+            if (err) console.log("Error "+err);
             if(result.affectedRows>0) 
             {
             console.log("DELETED")
@@ -34,7 +33,7 @@ class Queries{
     async Create(realURL,shortURL){
         const db= await connection.createConn();
         db.query(sql.create,[realURL,shortURL],(err,result) => {
-            if (err) throw err;
+            if (err) console.log("Error "+err);
             console.log({id : result.insertId,realURL,shortURL})
             producer([
                 "Created",
@@ -49,7 +48,5 @@ class Queries{
  
 
 }
-
-
 
 module.exports = Queries;
