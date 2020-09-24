@@ -1,7 +1,7 @@
 /* RabbitMQ */
 const amqp = require("amqplib");
 
-module.exports = async function connect(message) {
+async function connect(message) {
 
     try {
         const amqpServer = "amqp://rabbitmq:5672"
@@ -19,3 +19,4 @@ module.exports = async function connect(message) {
 
 }
 
+module.exports = connect;

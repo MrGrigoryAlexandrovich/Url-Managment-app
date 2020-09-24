@@ -20,6 +20,7 @@ services:
         - "5672:5672"
         depends_on:
         - db
+        restart: always
         networks:
             shortner_net:
                 ipv4_address: 172.28.0.6   
