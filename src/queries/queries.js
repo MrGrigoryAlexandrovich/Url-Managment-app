@@ -19,7 +19,7 @@ class Queries {  //     class for all querries
             if(result.affectedRows>0)  {        //  check if ID exist
             console.log('deleted')
             resolve(
-            producer([      //  if ID exist resolve producer message in array
+            producer([      //  if ID exist resolve producer message in array  -> producing to rabbitmq
                 "Deleted",
                 res.id,
                 res.realURL,
@@ -41,7 +41,7 @@ class Queries {  //     class for all querries
             if(result) {    	// if short url is created
             console.log('Created')
             console.log({id : result.insertId,realURL,shortURL})
-            resolve(    // if is created send message in array
+            resolve(    // if is created send message in array  -> producing to rabbitmq
             producer([
                 "Created",
                 result.insertId,
