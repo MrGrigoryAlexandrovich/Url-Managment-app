@@ -11,9 +11,9 @@ app.use(bodyParser.json());
 const routes = require('./routes/routes')
 //      Initializing routes
 app.use('/api/routes',routes)
-
+// define port
 const PORT = 8000 || process.env.PORT;
-
+//  start server
 app.listen(PORT,()=>{
     console.log('Server run on ',PORT);
 })

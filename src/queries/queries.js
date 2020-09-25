@@ -1,7 +1,8 @@
-//  loading modules
+//  loading modules and shortid dependency
 const connection = require('../connection/connection') 
 const sql = require('../queries/sql')
 const producer = require('../producer');
+const shortid = require('shortid')
 
 class Queries {  //     class for all querries
 
@@ -57,6 +58,19 @@ class Queries {  //     class for all querries
     })
     }
 
+    unqid(id) {                                         //   function to generate uniqid
+        id+=shortid.generate();                         //   format of shoeturl + shortid
+        const db =  connection.createConn();
+        db.query(sql.selecturl,id,(err,result) => {     //  query to check if shortURL exist
+            if(result.length>0)                         //  if  result length is >0 shortURL exist                                    
+            {
+            id = id.substring(0,22)                     // remove existed shortid - prepare for recursion
+            return this.unqid(id);                           // call function again - recursion function
+            }
+            })
+    db.end((err) => console.log("Connection closed"));  //close connectio with db
+    return id;
+    }
 
 }
 
