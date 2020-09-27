@@ -1,26 +1,35 @@
-//  loading modules and shortid dependency
+//                  loading connection, modules and shortid dependency
 const connection = require('../connection/connection') 
 const sql = require('../queries/sql')
-const producer = require('../producer');
+const producer = require('../rabbitmq-producer/producer')
 const shortid = require('shortid')
 
-class Queries {  //     class for all querries
-
-        Delete(id){   //    function for delete shorturl by ID using Promises
+ //                 class for all querries to DB
+class Queries { 
+        
+//                  function for delete shorturl by ID using Promises
+        Delete(id){   
         return new Promise((resolve, reject) => {
-        var res;  //    Helper variable - using for sending message to redirection service with RabbitMQ
-        const db=  connection.createConn();   
-        db.query(sql.select,[id],(err,result) => {   
-            if (err) console.log("Error "+err);
-            res = result[0];
-        })
-        db.query(sql.delete,id,(err,result) => {    	// delete query with parameters ID
+        const db=  connection.createConn()   
 
-            if (err) console.log("Error "+err);
-            if(result.affectedRows>0)  {        //  check if ID exist
-            console.log('deleted')
+ //                  Helper variable - using for sending message to redirection service with RabbitMQ
+        var res;  
+        db.query(sql.select,[id],(err,result) => {   
+            if (err) {
+                console.log(err)
+            }
+            res = result[0]
+        })
+
+//                      delete query with parameters ID
+        db.query(sql.delete,id,(err,result) => {    	
+
+//                      check if ID exist - > rows > 0
+            if(result.affectedRows>0)  {       
+          
+//                      if ID exist resolve producer message in array  -> producing to rabbitmq
             resolve(
-            producer([      //  if ID exist resolve producer message in array  -> producing to rabbitmq
+            producer([     
                 "Deleted",
                 res.id,
                 res.realURL,
@@ -28,21 +37,26 @@ class Queries {  //     class for all querries
             ]))
             }
             else
-            reject(new Error("Result is undefined."));      // if id not exist reject
+            reject(new Error("ID NOT EXIST OR ERROR"));     
         })
 
-        db.end((err) => console.log("Connection closed"));   //close connection with db    
+        db.end()
     })
     }
 
-    async Create(realURL,shortURL) {    //function for create new shortURL 
+//                      function for create new shortURL 
+    async Create(realURL,shortURL) {    
         return new Promise((resolve, reject) => {
-        const db=  connection.createConn();
-        db.query(sql.create,[realURL,shortURL],(err,result) => { // create query with parametrs realURL and ShortURL
-            if(result) {    	// if short url is created
-            console.log('Created')
-            console.log({id : result.insertId,realURL,shortURL})
-            resolve(    // if is created send message in array  -> producing to rabbitmq
+        const db=  connection.createConn()   
+
+//                      create query with parametrs realURL and ShortURL
+        db.query(sql.create,[realURL,shortURL],(err,result) => { 
+
+//                       if short url is created
+            if(result) {
+                
+ //                     if is created send message in array  -> producing to rabbitmq
+            resolve(   
             producer([
                 "Created",
                 result.insertId,
@@ -50,28 +64,41 @@ class Queries {  //     class for all querries
                 shortURL,
             ]))
             }
+
+//                      else -> reject if shortURL is not created succesfully
             else
-            reject(new Error("Error shortURL not Created")); // reject if shortURL is not created succesfully
+            reject(new Error("Error shortURL not Created"))
 
         })
-        db.end((err) => console.log("Connection closed"));  //  close connectio with db
+        db.end()
     })
     }
 
-    unqid(id) {                                         //   function to generate uniqid
-        id+=shortid.generate();                         //   format of shoeturl + shortid
-        const db =  connection.createConn();
-        db.query(sql.selecturl,id,(err,result) => {     //  query to check if shortURL exist
-            if(result.length>0)                         //  if  result length is >0 shortURL exist                                    
+//                       function to generate uniqid
+    unqid(id) {                                     
+        const db=  connection.createConn()   
+        
+//                      format of shoeturl + shortid
+        id+=shortid.generate()                     
+
+ //                     query to check if shortURL exist
+        db.query(sql.selecturl,id,(err,result) => {    
+
+//                      if  result length is >0 shortURL exist    
+            if(result.length>0)                                                         
             {
-            id = id.substring(0,22)                     // remove existed shortid - prepare for recursion
-            return this.unqid(id);                           // call function again - recursion function
+
+//                      remove existed shortid - prepare for recursion 
+            id = id.substring(0,22)                
+
+//                      call function again - recursion function because ID exist
+            return this.unqid(id)                          
             }
             })
-    db.end((err) => console.log("Connection closed"));  //close connectio with db
-    return id;
+    db.end()
+    return id
     }
 
 }
 
-module.exports = Queries;
+module.exports = Queries

@@ -1,4 +1,4 @@
-//  sql  for db queries
+//                  sql  for db queries
 const sql = {
     create: 'INSERT INTO url (realURL,shortURL) VALUES(?,?)',
     delete: 'DELETE FROM url WHERE id = ?',
