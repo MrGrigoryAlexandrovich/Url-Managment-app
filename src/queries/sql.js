@@ -6,4 +6,4 @@ const sql = {
     selecturl: 'SELECT * FROM url WHERE shortURL = ?'
 }
 
-module.exports = sql;
+module.exports = sql

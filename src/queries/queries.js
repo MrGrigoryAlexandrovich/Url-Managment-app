@@ -37,7 +37,7 @@ class Queries {
             ]))
             }
             else
-            reject(new Error("ID NOT EXIST OR ERROR"));     
+            reject(new Error("ID NOT EXIST OR ERROR")) 
         })
 
         db.end()
@@ -78,7 +78,7 @@ class Queries {
     unqid(id) {                                     
         const db=  connection.createConn()   
         
-//                      format of shoeturl + shortid
+//                      format of shorturl + shortid
         id+=shortid.generate()                     
 
  //                     query to check if shortURL exist

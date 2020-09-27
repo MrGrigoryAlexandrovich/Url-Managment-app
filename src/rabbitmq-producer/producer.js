@@ -1,5 +1,5 @@
 //              loading amqblib and config
-const amqp = require('amqplib');
+const amqp = require('amqplib')
 const config = require('../../config')
 
 async function connect(message) {       
