@@ -28,7 +28,11 @@ router.post('/create',(req,res) => {
     else {
     queries.Create(URLS.realURL,URLS.shortURL)
     .then(result => {
-        res.status(201).json(URLS)
+        res.status(201).json({
+            "id" : result,
+            "realURL" : URLS.realURL,
+            "shortURL": URLS.shortURL
+        })
     })
     .catch(err=> {
     res.status(400).end(err) 

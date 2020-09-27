@@ -17,6 +17,7 @@ class Queries {
         db.query(sql.select,[id],(err,result) => {   
             if (err) {
                 console.log(err)
+                throw er
             }
             res = result[0]
         })
@@ -55,14 +56,14 @@ class Queries {
 //                       if short url is created
             if(result) {
                 
- //                     if is created send message in array  -> producing to rabbitmq
-            resolve(   
+ //                     if is created send message in array  -> producing to rabbitmq and resolve
+            resolve(result.insertId,realURL,shortURL)
             producer([
                 "Created",
                 result.insertId,
                 realURL,
                 shortURL,
-            ]))
+            ])
             }
 
 //                      else -> reject if shortURL is not created succesfully
@@ -85,8 +86,7 @@ class Queries {
         db.query(sql.selecturl,id,(err,result) => {    
 
 //                      if  result length is >0 shortURL exist    
-            if(result.length>0)                                                         
-            {
+            if(result.length>0) {
 
 //                      remove existed shortid - prepare for recursion 
             id = id.substring(0,22)                
