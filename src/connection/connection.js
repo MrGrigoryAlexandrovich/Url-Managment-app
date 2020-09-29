@@ -1,10 +1,10 @@
-//          loadig mysql and config
+//loadig mysql and config
 const mysql = require('mysql')
 const config = require('../../config')
 
-const connection ={
+module.exports =  connection ={
     createConn(){
-//            Create connection
+        //Create connection
         const db = mysql.createConnection({
             host: config.db_host,
             user: config.db_user,
@@ -12,7 +12,7 @@ const connection ={
             database : config.db_name
         })
 
-//            Connect do db
+    // Connect do db
     db.connect((err)=> {
         if(err) console.log(err)
     })
@@ -20,4 +20,3 @@ const connection ={
     }
 }
 
-module.exports = connection

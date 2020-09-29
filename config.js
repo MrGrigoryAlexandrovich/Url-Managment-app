@@ -1,18 +1,19 @@
-const config = {}
-//              hosts
-config.rabbitmq_host='rabbitmq'
-config.db_host = 'db'
+const config = {
+//hosts
+rabbitmq_host:'rabbitmq',
+db_host:'db',
 
-//              db settings
-config.db_user = 'root'
-config.db_password = 'password'
-config.db_name = 'url-db'
+//db settings
+db_user : 'root',
+db_password : 'password',
+db_name : 'url-db',
 
-//              ports
-config.app_port=8000
-config.rabbitmq_port = 5672
+//ports
+app_port: 8000,
+rabbitmq_port: 5672,
 
-//              rabitmq channel
-config.rabbitmq_channel = 'url-channel'
+//rabitmq channel
+rabbitmq_channel : 'url-channel',
+}
 
 module.exports =config
