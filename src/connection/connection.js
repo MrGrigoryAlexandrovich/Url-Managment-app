@@ -11,7 +11,6 @@ module.exports =  connection ={
             password: config.db_password,
             database : config.db_name
         })
-
     // Connect do db
     db.connect((err)=> {
         if(err) console.log(err)
