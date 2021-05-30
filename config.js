@@ -1,5 +1,6 @@
 module.exports = {
 <<<<<<< HEAD
+<<<<<<< HEAD
   //hosts
   db_host: "remotemysql.com",
   //db settings
@@ -10,6 +11,8 @@ module.exports = {
   redirection: "https://easyshortener.herokuapp.com/chk/",
 };
 =======
+=======
+>>>>>>> parent of 1be00d9 (sorting code)
 //hosts
 rabbitmq_host:'rabbitmq',
 db_host:'db',
@@ -24,4 +27,7 @@ rabbitmq_port: 5672,
 //rabitmq channel
 rabbitmq_channel : 'url-channel',
 }
+<<<<<<< HEAD
+>>>>>>> parent of 1be00d9 (sorting code)
+=======
 >>>>>>> parent of 1be00d9 (sorting code)

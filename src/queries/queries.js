@@ -5,6 +5,7 @@ const producer = require('../rabbitmq-producer/producer')
 const shortid = require('shortid')
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 //class for all querries to DB
 module.exports = class Queries {
   //function for create new shortURL
@@ -70,6 +71,22 @@ module.exports = class Queries {
             console.log(err)
             throw err
         }
+=======
+ //class for all querries to DB
+ module.exports = class Queries { 
+    //function for delete shorturl by ID using Promises
+    Delete(id) {   
+    return new Promise((resolve, reject) => {
+    const db=  connection.createConn()   
+
+    //Helper variable - using for sending message to redirection service with RabbitMQ
+    var res;  
+    db.query(sql.select,[id],(err,result) => {   
+        if (err) {
+            console.log(err)
+            throw err
+        }
+>>>>>>> parent of 1be00d9 (sorting code)
         res = result[0]
     })
     //delete query with parameters ID
@@ -114,6 +131,9 @@ module.exports = class Queries {
         })
         db.end()
     })
+<<<<<<< HEAD
+>>>>>>> parent of 1be00d9 (sorting code)
+=======
 >>>>>>> parent of 1be00d9 (sorting code)
     }
     //function for check if shorturl exist in db - > resolve result 
