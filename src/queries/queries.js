@@ -5,17 +5,6 @@ const shortid = require("shortid");
 
 //class for all querries to DB
 module.exports = class Queries {
-  //function for delete shorturl by ID using Promises
-  Delete(id) {
-    return new Promise((resolve, reject) => {
-      const db = connection.createConn();
-      db.query(sql.delete, id, (err, result) => {
-        if (err) reject(new Error());
-        else resolve(result);
-      });
-      db.end();
-    });
-  }
   //function for create new shortURL
   Create(realURL, shortURL) {
     return new Promise((resolve, reject) => {
@@ -50,7 +39,7 @@ module.exports = class Queries {
       const db = connection.createConn();
       db.query(sql.selecturl, id, (err, result) => {
         if (err) reject(err);
-        resolve(result);
+        resolve(result[0]);
       });
       db.end();
     });
