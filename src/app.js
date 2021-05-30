@@ -1,18 +1,26 @@
 //loading dependencies and config
+<<<<<<< HEAD
 const express = require("express");
 const cors = require("cors");
 const config = require("../config");
 const Queries = require("./queries/queries");
 const queries = new Queries();
+=======
+const express = require('express')
+const cors = require('cors')
+const bodyParser = require('body-parser')
+const config = require('../config')
+>>>>>>> parent of 1be00d9 (sorting code)
 // Loading routes and express
-const app = express();
-const routes = require("./routes/routes");
+const app = express()
+const routes = require('./routes/routes')
 // define port
-const PORT = config.PORT || 8000;
+const PORT = config.PORT || 8000
 //loading middleware
-app.use(cors());
-app.use(express.json());
+app.use(cors())
+app.use(bodyParser.json())
 //Initializing routes
+<<<<<<< HEAD
 app.use("/api/routes", routes);
 
 app.get('/chk', async (req, res) => {
@@ -23,7 +31,10 @@ app.get('/chk', async (req, res) => {
       return res.sendStatus(404)
 })
 
+=======
+app.use('/api/routes',routes)
+>>>>>>> parent of 1be00d9 (sorting code)
 //start server
-app.listen(PORT, () => {
-  console.log("Server run on ", PORT);
-});
+app.listen(PORT,()=>{
+    console.log('Server run on ',PORT)
+})

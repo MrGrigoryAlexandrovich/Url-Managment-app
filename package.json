@@ -14,6 +14,11 @@
   "author": "Ahmed Cvrčak",
   "license": "ISC",
   "dependencies": {
+<<<<<<< HEAD
+=======
+    "amqplib": "^0.6.0",
+    "body-parser": "^1.19.0",
+>>>>>>> parent of 1be00d9 (sorting code)
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "is-valid-http-url": "^1.0.3",
